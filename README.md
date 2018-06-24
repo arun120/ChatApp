@@ -17,8 +17,7 @@ chat/{id} -> access Chatroom with the given id
 
 # Command Start the App
 1) npm install (First Time Only)
-
-2)npm start
+2) npm start
 
 # Endpoints
 
