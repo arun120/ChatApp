@@ -15,19 +15,10 @@ websocketController = function (io) {
             if(data.msg.startsWith("$$Run$$:")) {
 
                 var command =  data.msg.substring(8);
-                const {exec} = require('child_process');
-                exec(command, (err, stdout, stderr) => {
-                    if (err) {
-                        // node couldn't execute the command
-                        Db.add(data.id, "Command Failed");
-                        io.emit('broadcast message '+data.id, "Command Failed");
-                        return;
-                    }
-                    Db.add(data.id, "Command Ran Successfully");
-                    io.emit('broadcast message '+data.id, "Command Ran Successfully");
-                    // the *entire* stdout and stderr (buffered)
-                    console.log(`stdout: ${stdout}`);
-                    console.log(`stderr: ${stderr}`);
+                var osExecute = require('./osExecute');
+                osExecute(command,function (message) {
+                    Db.add(data.id, message);
+                    io.emit('broadcast message '+data.id, message);
                 });
             }
 
@@ -36,5 +27,9 @@ websocketController = function (io) {
 
     });
 }
+
+
+
+
 
 module.exports = websocketController;
