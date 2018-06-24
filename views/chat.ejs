@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Welcome to chat app</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var pollHistory = function () {
+                console.log("polling...");
+                $.get('../chatHistory/<%=chatId%>',function (data) {
+                    console.log(data);
+                    console.log(typeof data)
+                    $('#chat').html('');
+                    data.substring(1,data.length-1).split("\",\"").forEach(function (msg) {
+                        var HTML ='<li>' + msg.replace('\"','') + '</li>';
+                        $('#chat').append(HTML);
+                    })
+                });
+
+            }
+            pollHistory();
+
+            var socket = io();
+
+            socket.on('broadcast message <%=chatId%>', function(msg){
+                var HTML ='<li>' + msg.replace('\"','') + '</li>';
+                $('#chat').append(HTML);
+            });
+
+            console.log("<%= chatHistory%>");
+            $('#send').click(function () {
+                socket.emit('send message', '{ "id" : "<%=chatId%>", "msg" :"'+ $("#message").val() +'" }');
+            });
+        });
+
+
+    </script>
+
+</head>
+<body>
+
+
+    Enter Message to Send : <input type="text" id="message">
+                 <input type="button" id="send" value="send">
+
+<div id="chat">
+
+</div>
+
+</body>
+</html>
