@@ -12,7 +12,7 @@ Retrieve data from static DB and display ----> register broadcast listeners ----
 
 
 
-chat/:id -> access Chatroom with the given id
+chat/{id} -> access Chatroom with the given id
 
 
 # Command Start the App
