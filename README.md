@@ -4,7 +4,7 @@ Chat Application that supports multiple chatrooms.
 
 # Architecture
 
-User/Process ---- send data to websocket in server(websocketController) ----> Log data in MessageDB(static DB) ---> Broadcast to all in current Chatroom
+User/Process ---- send message to websocket in server(websocketController) ----> Log data in MessageDB(static DB) ---> Broadcast to all in current Chatroom (those who listen for message : "broadcast message {id}")
 
 User Joining a Existing Chatroom
 
@@ -26,4 +26,4 @@ http://localhost:3000/chat/{id} , change the id to access different chatrooms.
 # Example
 http://localhost:3000/chat/1
 http://localhost:3000/chat/2
-http://localhost:3000/chat/3
+http://localhost:3000/chat/meeeting12
